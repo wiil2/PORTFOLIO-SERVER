@@ -1,12 +1,18 @@
 const express = require("express");
 
-const data = require("./data")
 
 const app = express();
+
+const dotenv = require("dotenv")
+dotenv.config();
+
+const dbConnect = require("./configs/db.config");
+dbConnect();
 
 app.use(express.json());
 
 
-app.listen(4000, () => {
-    console.log("Server tá dibas!")
+
+app.listen(Number(process.env.PORT), () => {
+    console.log("Server Conectado dibas! PORT:", process.env.PORT);
 })
