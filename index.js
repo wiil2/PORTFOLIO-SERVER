@@ -12,6 +12,9 @@ dbConnect();
 app.use(express.json());
 
 
+const userRouter = require("./routes/user.routes");
+app.use("/user", userRouter);
+
 
 app.listen(Number(process.env.PORT), () => {
     console.log("Server Conectado dibas! PORT:", process.env.PORT);
