@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, default: mongoose } = require("mongoose");
 
 const userSchema = new Schema({
     nome: { type: String, required: true, trim: true },
@@ -12,8 +12,8 @@ const userSchema = new Schema({
     cidadeEestado: { type: String, required: true, trim: true },
     fone: { type: String, required: true, trim: true }, 
     passwordHash: { type: String, required: true, match:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/, trim: true},
-    terminados: [],
-    emAndamento: []
+    terminados: [{type: mongoose.Types.ObjectId, ref: "Projetos"}],
+    emAndamento: [{type: mongoose.Types.ObjectId, ref: "Projetos"}]
 });
 
 
