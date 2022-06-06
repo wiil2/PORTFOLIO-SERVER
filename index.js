@@ -1,20 +1,15 @@
+require("dotenv").config();
 const express = require("express");
-
+const cors = require("cors");
+require("./config/db.config")();
 
 const app = express();
 
-const dotenv = require("dotenv")
-dotenv.config();
-
-const dbConnect = require("./configs/db.config");
-dbConnect();
-
 app.use(express.json());
-
+app.use(cors({origin: process.env.REACT_APP_URL}));
 
 const userRouter = require("./routes/user.routes");
 app.use("/user", userRouter);
-
 
 app.listen(Number(process.env.PORT), () => {
     console.log("Server Conectado dibas! PORT:", process.env.PORT);
