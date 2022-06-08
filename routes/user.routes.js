@@ -2,7 +2,7 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt")
 const UserModel = require("../models/User.model");
 
-
+const generateToken = require("../configs/jwt.config")
 const saltRounds = 10;
 
 router.post("/signup", async (req, res) => {
@@ -50,6 +50,37 @@ router.get("/:userId", async (req, res) => {
     } catch (err) {
         console.log(err)
         return res.status(500).json(error)
+    }
+});
+
+router.post ("/login", async (req,res) => {
+    try {
+
+        const {email, password} = req.body;
+
+        const user = await UserModel.findOne({email: email});
+
+        if (!user) {
+            return res.status(400).json({ msg: "Wrong passowrd or email"});
+        }
+
+        if (await bcrypt.compare(password, user.passwordHash)) {
+
+            delete user._doc.passwordHash;
+            const token = generateToken(user);
+
+            return res.status(200).json({
+                token: token,
+                user: {...user._doc},
+            })
+
+        } else {
+            return res.status(400).json({ msg: "Wrong passowrd or email"});
+        }
+
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
     }
 })
 
