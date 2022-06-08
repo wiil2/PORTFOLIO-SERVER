@@ -7,8 +7,7 @@ const saltRounds = 10;
 
 router.post("/signup", async (req, res) => {
     try{
-        // CRIPTOGRAFAR SENHA 
-
+         
         const { password } = req.body;
 
         if ( !password || !password.match(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/)) {
@@ -41,11 +40,9 @@ router.get("/:userId", async (req, res) => {
     try{
 
         const {userId} = req.params
-
         const foundedUser = await UserModel.findOne({ _id: userId })
 
         return res.status(200).json(foundedUser)
-
 
     } catch (err) {
         console.log(err)
@@ -57,7 +54,6 @@ router.post ("/login", async (req,res) => {
     try {
 
         const {email, password} = req.body;
-
         const user = await UserModel.findOne({email: email});
 
         if (!user) {
