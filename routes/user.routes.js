@@ -79,11 +79,11 @@ router.post ("/login", async (req,res) => {
         console.log(err)
         return res.status(500).json(err)
     }
-})
+});
 
-router.get("/profile", isAuth, attachCurrentUser,  async (req, res) => {
-    const user = await UserModel.findById(req.currentUser._id)
-    return res.status(200).json(user) 
+router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
+  const user = await UserModel.findById(req.currentUser._id)
+  return res.status(200).json({msg: "Salve!"});
 
 })
 
