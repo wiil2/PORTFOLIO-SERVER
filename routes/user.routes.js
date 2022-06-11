@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt")
 const UserModel = require("../models/User.model");
-
-const generateToken = require("../configs/jwt.config")
+const isAuth = require("../middlewares/isAuth");
+const generateToken = require("../configs/jwt.config");
+const attachCurrentUser = require("../middlewares/attachCurrentUser");
 const saltRounds = 10;
 
 router.post("/signup", async (req, res) => {
@@ -80,6 +81,10 @@ router.post ("/login", async (req,res) => {
     }
 })
 
-router.get("/profile", async (req, res) => {})
+router.get("/profile", isAuth, attachCurrentUser,  async (req, res) => {
+    const user = await UserModel.findById(req.currentUser._id)
+    return res.status(200).json(user) 
+
+})
 
 module.exports = router;
