@@ -58,7 +58,7 @@ router.post ("/login", async (req,res) => {
         const user = await UserModel.findOne({email: email});
 
         if (!user) {
-            return res.status(400).json({ msg: "Wrong passowrd or email"});
+            return res.status(400).json({ msg: "Wrong password or email"});
         }
 
         if (await bcrypt.compare(password, user.passwordHash)) {
@@ -80,11 +80,5 @@ router.post ("/login", async (req,res) => {
         return res.status(500).json(err)
     }
 });
-
-router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
-  const user = await UserModel.findById(req.currentUser._id)
-  return res.status(200).json({msg: "Salve!"});
-
-})
 
 module.exports = router;
