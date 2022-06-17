@@ -81,4 +81,10 @@ router.post ("/login", async (req,res) => {
     }
 });
 
+router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
+    const user = await UserModel.findById(req.currentUser._id)
+    return res.status(200).json(user);
+
+  });
+
 module.exports = router;
