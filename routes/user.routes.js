@@ -36,21 +36,6 @@ router.post("/signup", async (req, res) => {
     }
 });
 
-router.get("/:userId", async (req, res) => {
-
-    try{
-
-        const {userId} = req.params
-        const foundedUser = await UserModel.findOne({ _id: userId })
-
-        return res.status(200).json(foundedUser)
-
-    } catch (err) {
-        console.log(err)
-        return res.status(500).json(err)
-    }
-});
-
 router.post ("/login", async (req,res) => {
     try {
 
@@ -82,9 +67,61 @@ router.post ("/login", async (req,res) => {
 });
 
 router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
-    const user = await UserModel.findById(req.currentUser._id)
+    const user = await UserModel.findById(req.currentUser._id).populate("terminados").populate("emAndamento")
     return res.status(200).json(user);
 
   });
+
+
+
+  /* router.get("/:userId", async (req, res) => {
+
+    try{
+
+        const {userId} = req.params
+        const foundedUser = await UserModel.findOne({ _id: userId })
+
+        return res.status(200).json(foundedUser)
+
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+    }
+}); */
+
+router.patch("/update-profile", isAuth, attachCurrentUser, async (req, res) => {
+    try{
+
+        const loggedInUser = req.currentUser;
+
+        const updatedUser = await UserModel.findOneAndUpdate(
+            { _id: loggedInUser._id },
+            { ...req.body}, 
+            { $push: {emAndamento: req.body}},
+            { runValidators: true, new: true }
+        );
+
+        delete updatedUser._doc.passwordHash;
+
+        return res.status(200).json(updatedUser);
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json(error)
+    }
+});
+
+router.delete("/delete-user", isAuth, attachCurrentUser, async (req, res) => {
+    try {
+
+        const deletedUser = await UserModel.deleteOne({_id: req.currentUser._id});
+
+        return res.status(200).json(deletedUser);
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json(error)
+    }
+})
 
 module.exports = router;
