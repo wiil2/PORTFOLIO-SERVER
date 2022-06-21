@@ -67,7 +67,7 @@ router.post ("/login", async (req,res) => {
 });
 
 router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
-    const user = await UserModel.findById(req.currentUser._id).populate("terminados").populate("emAndamento")
+    const user = await UserModel.findById(req.currentUser._id).populate("finished").populate("inProgress")
     return res.status(200).json(user);
 
   });
@@ -97,7 +97,7 @@ router.patch("/update-profile", isAuth, attachCurrentUser, async (req, res) => {
         const updatedUser = await UserModel.findOneAndUpdate(
             { _id: loggedInUser._id },
             { ...req.body}, 
-            { $push: {emAndamento: req.body}},
+            { $push: {inProgress: req.body}},
             { runValidators: true, new: true }
         );
 

@@ -11,6 +11,9 @@ app.use(cors({origin: process.env.REACT_APP_URL}));
 const userRouter = require("./routes/user.routes");
 app.use("/user", userRouter);
 
+const projectsRouter = require("./routes/projects.routes");
+app.use("/projects", projectsRouter);
+
 app.listen(Number(process.env.PORT), () => {
     console.log("Server Conectado dibas! PORT:", process.env.PORT);
 })
