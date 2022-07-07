@@ -15,6 +15,7 @@ const userSchema = new Schema({
     description:  { type: String },
     denomination: { type: String },
     interests: {type: String, min: 10, max: 100},
+    tags: {type: String, required: true, enum:["Instagram", "Linkedin", "Github", "WhatsApp"]},
     passwordHash: { type: String, required: true, match:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/, trim: true},
     img: { type: String, default: "https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-512.png" },
     role: { type: String, enum: ["PROFISSIONAL", "CLIENTE"], default: "CLIENTE" },
