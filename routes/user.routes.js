@@ -1,4 +1,4 @@
-const router = require("express").Router();
+  const router = require("express").Router();
 const bcrypt = require("bcrypt")
 const UserModel = require("../models/User.model");
 const isAuth = require("../middlewares/isAuth");
@@ -90,8 +90,9 @@ router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
 }); */
 
 router.patch("/update-profile", isAuth, attachCurrentUser, async (req, res) => {
+    console.log(req.body);
     try{
-
+        
         const loggedInUser = req.currentUser;
 
         const updatedUser = await UserModel.findOneAndUpdate(
