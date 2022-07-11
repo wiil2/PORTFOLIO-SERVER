@@ -89,7 +89,7 @@ router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
     }
 }); */
 
-router.patch("/update-profile", isAuth, attachCurrentUser, async (req, res) => {
+router.patch("/profileEdit", isAuth, attachCurrentUser, async (req, res) => {
     console.log(req.body);
     try{
         
@@ -98,8 +98,9 @@ router.patch("/update-profile", isAuth, attachCurrentUser, async (req, res) => {
         const updatedUser = await UserModel.findOneAndUpdate(
             { _id: loggedInUser._id },
             { ...req.body}, 
-            { $push: {inProgress: req.body}},
-            { runValidators: true, new: true }
+            //{ $push: {inProgress: req.body}},
+            { runValidators: true },
+            { new: true }
         );
 
         delete updatedUser._doc.passwordHash;
