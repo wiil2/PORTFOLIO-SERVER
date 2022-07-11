@@ -14,11 +14,14 @@ const userSchema = new Schema({
     age: { type: String },
     description:  { type: String },
     denomination: { type: String },
+    skills: {type: String, min: 10, max: 300 }, 
     interests: {type: String, min: 10, max: 300},
-    tags: {type: String, enum:["Instagram", "Linkedin", "Github", "WhatsApp"]},
+    instagram: { type: String },
+    linkedin: { type: String },
+    github: { type: String },
+    curriculo : { type: String},
     passwordHash: { type: String, required: true, match:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/, trim: true},
     img: { type: String, default: "https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-512.png" },
-    role: { type: String, enum: ["PROFISSIONAL", "CLIENTE"], default: "CLIENTE" },
     finished: [{type: mongoose.Types.ObjectId, ref: "Projects"}],
     inProgress: [{type: mongoose.Types.ObjectId, ref: "Projects"}]
 });
