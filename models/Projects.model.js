@@ -5,8 +5,7 @@ const projectsSchema = new Schema({
     language: {type: String, required: true },
     description: {type: String, required: true, min: 10, max: 150},
     tags: {type: String, required: true, enum:["FINISHED", "IN PROGRESS"]},
-    startDate: {type: Date, default: Date.now},
-    endDate: {type: Date, default: Date.now}
+    img: { type: String, default: "https://mustlovelists.com/wp-content/uploads/2021/12/Project-notebook.jpg" }
 });
 
 const ProjectsModel = model("Projects", projectsSchema );
