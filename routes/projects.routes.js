@@ -6,7 +6,7 @@ const isClient = require("../middlewares/isClient");
 const UserModel = require("../models/User.model");
 
 
-router.get("/create-project", isAuth, attachCurrentUser, isClient,  async (req,res) => {
+router.get("/createProject", isAuth, attachCurrentUser, isClient,  async (req,res) => {
     try{
 
         const loggedInUser = req.currentUser

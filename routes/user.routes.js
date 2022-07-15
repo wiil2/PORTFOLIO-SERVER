@@ -39,6 +39,7 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+  console.log(user)
   try {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email: email });
@@ -67,24 +68,10 @@ router.post("/login", async (req, res) => {
 router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
   const user = await UserModel.findById(req.currentUser._id)
     .populate("finished")
-    .populate("inProgress");
+    .populate("inProgress")
+    .populate("projects");
   return res.status(200).json(user);
 });
-
-/* router.get("/:userId", async (req, res) => {
-
-    try{
-
-        const {userId} = req.params
-        const foundedUser = await UserModel.findOne({ _id: userId })
-
-        return res.status(200).json(foundedUser)
-
-    } catch (err) {
-        console.log(err)
-        return res.status(500).json(err)
-    }
-}); */
 
 router.patch("/profileEdit", isAuth, attachCurrentUser, async (req, res) => {
   console.log(req.body);
