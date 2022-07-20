@@ -45,7 +45,7 @@ router.patch("/update-project/:projectId", isAuth, attachCurrentUser, async (req
     }
 });
 
-router.get("/all-projects", isAuth, attachCurrentUser, async (req, res) => {
+router.get("/projects", isAuth, attachCurrentUser, async (req, res) => {
     try{
 
         const getProjects = await ProjectsModel.find()
@@ -58,7 +58,7 @@ router.get("/all-projects", isAuth, attachCurrentUser, async (req, res) => {
     }
 });
 
-router.get("/projectsById", isAuth, attachCurrentUser, isClient, async (req, res) => {
+router.get("/projectsById", isAuth, attachCurrentUser, async (req, res) => {
     try{
 
         const getProject = await ProjectsModel.findById(req.body.user).populate("user")
@@ -81,6 +81,17 @@ router.delete("/delete-project/:projectId", async (req, res) => {
     } catch (err) {
         console.log(err)
         return res.status(500).json(err)
+    }
+})
+
+router.get("/projects/:idProject", async (req, res) => {
+    try{
+        const projectById = await ProjectsModel.find({ _id: req.params.idProject })
+        return res.status(200).json(projectById);
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(err)
     }
 })
 
