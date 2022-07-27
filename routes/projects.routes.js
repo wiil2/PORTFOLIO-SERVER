@@ -2,7 +2,6 @@ const router = require("express").Router();
 const ProjectsModel = require("../models/Projects.model");
 const isAuth = require("../middlewares/isAuth");
 const attachCurrentUser = require("../middlewares/attachCurrentUser");
-const isClient = require("../middlewares/isClient");
 const UserModel = require("../models/User.model");
 
 
@@ -85,7 +84,7 @@ router.delete("/delete-project/:projectId", async (req, res) => {
 })
 
 router.get("/projects/:id", async (req, res) => {
-   
+   console.log(projectById);
     try{
         const projectById = await ProjectsModel.find({ _id: req.params.id })
         return res.status(200).json(projectById);
@@ -94,7 +93,6 @@ router.get("/projects/:id", async (req, res) => {
         console.log(err)
         res.status(500).json(err)
     }
-console.log(projectById)
 
 })
 module.exports = router;
