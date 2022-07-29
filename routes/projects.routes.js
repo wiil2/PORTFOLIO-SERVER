@@ -84,7 +84,7 @@ router.delete("/delete-project/:projectId", async (req, res) => {
 })
 
 router.get("/projects/:id", async (req, res) => {
-   console.log(projectById);
+   
     try{
         const projectById = await ProjectsModel.find({ _id: req.params.id })
         return res.status(200).json(projectById);
