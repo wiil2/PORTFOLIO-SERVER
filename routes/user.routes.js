@@ -41,7 +41,7 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await UserModel.findOne({ email: email });
+    const user = await UserModel.findOne({ email: email }).populate("finished").populate("inProgress").populate("projects");
 
     if (!user) {
       return res.status(400).json({ msg: "Wrong password or email" });
