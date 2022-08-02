@@ -4,7 +4,7 @@ const projectsSchema = new Schema({
     name: { type: String, required: true, trim: true },
     language: {type: String, required: true },
     description: {type: String, required: true, min: 10, max: 150},
-    tags: {type: String, required: true, enum:["FINISHED", "IN PROGRESS"]},
+    tags: {type: String, required: true, enum:["FINALIZADO", "EM ANDAMENTO"]},
     img: { type: String, default: "https://mustlovelists.com/wp-content/uploads/2021/12/Project-notebook.jpg" }
 });
 
