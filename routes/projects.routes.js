@@ -27,11 +27,11 @@ router.post("/createproject", isAuth, attachCurrentUser, async (req,res) => {
     }
 });
 
-router.patch("/update-project/:projectId", isAuth, attachCurrentUser, async (req, res) => {
+router.patch("/update-project/:id", isAuth, attachCurrentUser, async (req, res) => {
     try {
 
         const updatedProject = await ProjectsModel.findOneAndUpdate(
-            { _id: req.params.projectid },
+            { id: req.params.id },
             { ...req.body },
             { runValidators: true, new: true} 
         );
@@ -83,7 +83,7 @@ router.delete("/delete-project/:projectId", async (req, res) => {
     }
 })
 
-router.get("/projects/:id", async (req, res) => {
+router.get("/project/:id", async (req, res) => {
    
     try{
         const projectById = await ProjectsModel.find({ _id: req.params.id })
