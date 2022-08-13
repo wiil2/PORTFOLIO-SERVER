@@ -31,7 +31,7 @@ router.patch("/update-project/:id", isAuth, attachCurrentUser, async (req, res) 
     try {
 
         const updatedProject = await ProjectsModel.findOneAndUpdate(
-            { id: req.params._id },
+            { _id: req.params.id },
             { ...req.body },
             { runValidators: true, new: true} 
         );
