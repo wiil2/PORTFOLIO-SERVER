@@ -8,7 +8,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-const storage = new CloudinaryStorage({
+const storageImg = new CloudinaryStorage({
     cloudinary,
     params: {
         folder: "img-folder",
@@ -17,6 +17,16 @@ const storage = new CloudinaryStorage({
     },
 });
 
-const uploadImg = multer({ storage });
+const storageVid = new CloudinaryStorage({
+    cloudinary, 
+    params: {
+        folder: "vid-folder",
+        format: async (req, file) => "mp4",
+        use_filename: true,
+    },
+});
 
-module.exports = uploadImg;
+const uploadImg = multer({ storageImg });
+const uploadVid = multer({ storageVid });
+
+module.exports = uploadImg, uploadVid;
