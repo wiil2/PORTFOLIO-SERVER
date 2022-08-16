@@ -41,7 +41,7 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await UserModel.findOne({ email: email }).populate("finished").populate("inProgress").populate("projects");
+    const user = await UserModel.findOne({ email: email })
 
     if (!user) {
       return res.status(400).json({ msg: "Wrong password or email" });
@@ -65,10 +65,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/profile", isAuth, attachCurrentUser, async (req, res) => {
-  const user = await UserModel.findById(req.currentUser._id)
-    .populate("finished")
-    .populate("inProgress")
-    .populate("projects");
+  const user = await UserModel.findById(req.currentUser._id).populate("projects");
   return res.status(200).json(user);
 });
 
@@ -81,8 +78,6 @@ router.patch("/profileEdit", isAuth, attachCurrentUser, async (req, res) => {
       { _id: loggedInUser._id },
       { ...req.body },
       { new: true, runValidators: true }
-      // $push: {inProgress: req.body}},
-      // { runValidators: true },
     );
 
     delete updatedUser._doc.passwordHash;

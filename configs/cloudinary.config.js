@@ -17,16 +17,8 @@ const storageImg = new CloudinaryStorage({
     },
 });
 
-const storageVid = new CloudinaryStorage({
-    cloudinary, 
-    params: {
-        folder: "vid-folder",
-        format: async (req, file) => "mp4",
-        use_filename: true,
-    },
-});
 
 const uploadImg = multer({ storageImg });
-const uploadVid = multer({ storageVid });
 
-module.exports = uploadImg, uploadVid;
+
+module.exports = uploadImg;

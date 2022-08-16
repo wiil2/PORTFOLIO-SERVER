@@ -1,6 +1,7 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, default: mongoose } = require("mongoose");
 
 const projectsSchema = new Schema({
+    user: { type: mongoose.Types.ObjectId, ref: "User"},
     name: { type: String, required: true, trim: true },
     language: {type: String, required: true },
     description: {type: String, required: true, min: 10, max: 150},

@@ -10,16 +10,17 @@ router.post("/createproject", isAuth, attachCurrentUser, async (req,res) => {
 
         const loggedInUser = req.currentUser
         const createdProject = await ProjectsModel.create({
-            ...req.body, user: loggedInUser._id
+            ...req.body, 
+            user: loggedInUser._id
         });
 
         const idProject = await UserModel.findByIdAndUpdate(
             { _id: loggedInUser._id },
-            { $push: {finished: createdProject._id} },
+            { $push: {projects: createdProject._id} },
             { runValidators: true, new: true }
         )
 
-        return res.status(200).json(createdProject)
+        return res.status(201).json(createdProject)
 
     } catch (err) {
         console.log(err)
@@ -68,7 +69,7 @@ router.get("/projectsById", isAuth, attachCurrentUser, async (req, res) => {
         console.log(err)
         return res.status(500).json(err)
     }
-});
+}); 
 
 router.delete("/delete-project/:projectId", async (req, res) => {
     try {
