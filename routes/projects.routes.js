@@ -45,7 +45,7 @@ router.patch("/update-project/:id", isAuth, attachCurrentUser, async (req, res) 
     }
 });
 
-router.get("/projects", attachCurrentUser, async (req, res) => {
+router.get("/projects", isAuth, attachCurrentUser, async (req, res) => {
     try{
 
         const getProjects = await ProjectsModel.find()
@@ -58,7 +58,7 @@ router.get("/projects", attachCurrentUser, async (req, res) => {
     }
 });
 
-router.get("/projectsById", attachCurrentUser, async (req, res) => {
+router.get("/projectsById", isAuth, attachCurrentUser, async (req, res) => {
     try{
 
         const getProject = await ProjectsModel.findById(req.body.user).populate("user")
