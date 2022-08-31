@@ -69,6 +69,19 @@ router.get("/profile", attachCurrentUser, async (req, res) => {
   return res.status(200).json(user);
 });
 
+router.get("/profile/:id", async (req, res) => {
+   
+  try{
+      const profileById = await UserModel.find({ _id: req.params.id }).populate("projects")
+      return res.status(200).json(profileById);
+
+  } catch (err) {
+      console.log(err)
+      res.status(500).json(err)
+  }
+
+})
+
 router.patch("/profileEdit", isAuth, attachCurrentUser, async (req, res) => {
   console.log(req.body);
   try {
